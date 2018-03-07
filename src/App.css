@@ -48,6 +48,7 @@ body{
   background:#fff;
   border:none;
   border-bottom:1px solid #ddd;
+  text-align: left;
 }
 
 .ui-state-default:last-child{
