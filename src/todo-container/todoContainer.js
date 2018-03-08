@@ -29,12 +29,12 @@ class TodoContainer extends Component {
 
     updateTaskStatus(taskId, status, listData){
           taskId = parseInt(taskId,10);
-          listData.map(function(ele, index){
+          var data = listData.map(function(ele, index){
             if(ele.id === taskId){
                 ele.isCompleted = status;
             }
           });
-
+          console.log(data);
           this.setState({listData:listData});
     }
 
