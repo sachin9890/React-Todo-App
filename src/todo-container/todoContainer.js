@@ -7,22 +7,9 @@ class TodoContainer extends Component {
     constructor(props){
         super(props);
         window.id = 0;
-        this.state = {listData:[],showAll:true, showCompleted:false, showActive:false, leftItems:0};
+        this.state = {listData:[], leftItems:0, searchKey:'All'};
         this.createTodo = this.createTodo.bind(this);
         this.completeTask = this.completeTask.bind(this);
-    }
-
-    componentDidUpdate(){
-
-        var listData = this.state.listData;
-        var stateCount = this.state.leftItems;
-
-        var leftItemsCount = this.getleftItems(listData).length;
-        
-        if(leftItemsCount !== stateCount){
-            this.setState({leftItems:leftItemsCount});
-        }
-        
     }
 
     createTodo(evt){
@@ -51,23 +38,43 @@ class TodoContainer extends Component {
           this.setState({listData:listData});
     }
 
-    getleftItems(listData){
-        return listData.filter(function(ele, index){
-            return !ele.isCompleted;
-          });
+    getleftItems(){
+        var leftItems = this.getListItem('Active');
+        return leftItems.length;
+    }
+
+    updateSearchKey(key){
+        this.setState({searchKey:key});
+    }
+
+    getListItem(searchKey){
+        switch(searchKey){
+            case 'All':
+                return this.state.listData;
+            case 'Active':
+                return this.state.listData.filter(function(ele){
+                            return !ele.isCompleted;
+                        });
+            case 'Completed':
+                return this.state.listData.filter(function(ele){
+                            return ele.isCompleted;
+                        });
+            default : 
+                break;                  
+        }
     }
 
     render() {
         return(
             <div className="container">
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-6 margin-auto">
                         <div className="todolist not-done">
                             <h1>Todos</h1>
                             <input type="text" className="form-control add-todo" placeholder="Add todo" onKeyPress={this.createTodo}/>
                             <hr/>
-                            <TodoItem listData={this.state.listData} completeTask={this.completeTask}/>
-                            <TodoFooter count={this.state.leftItems}/>
+                            <TodoItem listData={this.getListItem(this.state.searchKey)} completeTask={this.completeTask}/>
+                            <TodoFooter updateSearchKey={this.updateSearchKey.bind(this)} count={this.getleftItems()} active={this.state.searchKey}/>
                         </div>
                     </div>
                 </div>

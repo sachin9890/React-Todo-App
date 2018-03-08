@@ -1,7 +1,12 @@
 .task{
     margin-left:12px;
+    font-size: 35px;
 }
 
 .complete{
     text-decoration: line-through;
+}
+
+.zoom{
+    zoom:1.5;
 }

@@ -7,7 +7,7 @@ const TodoItem = (props) =>(
         return <li className="ui-state-default" key={item.id}>
                   <div className="checkbox">
                     <label>
-                        <input type="checkbox" id={item.id} onChange={props.completeTask}/>
+                        <input className="zoom" type="checkbox" defaultChecked={item.isCompleted} id={item.id} onChange={props.completeTask}/>
                         <span className={"task " + (item.isCompleted ? 'complete' : '')}>{item.task}</span>               
                     </label>
                 </div>
